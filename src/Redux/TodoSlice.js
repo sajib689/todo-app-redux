@@ -12,6 +12,12 @@ const TodoSlice = createSlice({
                 completed: false
             })
         },
+        toggleTodo: (state, action) => {
+            const todo = state.find(todo => todo.id === action.payload);
+            if(todo) {
+                todo.completed = !todo.completed;
+            }
+        },
         removeTodo: (state, action) => {
             return state.filter(todo => todo.id !== action.payload);
         },
