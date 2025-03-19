@@ -6,7 +6,11 @@ const TodoSlice = createSlice({
     initialState: [],
     reducers: {
         addTodo: (state, action) => {
-            state.push(action.payload);
+            state.push({
+                id: new Date(),
+                text: action.payload,
+                completed: false
+            })
         },
         removeTodo: (state, action) => {
             return state.filter(todo => todo.id !== action.payload);
