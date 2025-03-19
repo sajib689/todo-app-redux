@@ -6,18 +6,18 @@ const TodoSlice = createSlice({
     initialState: [],
     reducers: {
         addTodo: (state, action) => {
-            return [...state, action.payload];
+            state.push(action.payload);
         },
         removeTodo: (state, action) => {
             return state.filter(todo => todo.id !== action.payload);
         },
-        toggleTodo: (state, action) => {
+        toggleComplete: (state, action) => {
             return state.map(todo => {
-                if (todo.id === action.payload) {
+                if(todo.id === action.payload) {
                     return {
                         ...todo,
                         completed: !todo.completed
-                    };
+                    }
                 }
                 return todo;
             });
