@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { addTodo, toggleTodo, removeTodo, editTodo } from "../Redux/TodoSlice";
+import { useEffect, useState } from "react";
+import { addTodo, toggleTodo, removeTodo, editTodo,loadTodos } from "../Redux/TodoSlice";
 
 const Todo = () => {
     const [text, setText] = useState('');
@@ -8,6 +8,19 @@ const Todo = () => {
     const todo = useSelector((state) => state.todos);
     const dispatch = useDispatch();
 
+    // Load todos from localStorage when the component mounts
+    useEffect(() => {
+        const savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+        if (savedTodos.length > 0) {
+            dispatch(loadTodos(savedTodos));
+        }
+        
+    }, [dispatch]);
+
+    // Save todos to localStorage whenever they change
+    useEffect(() => {
+        localStorage.setItem("todos", JSON.stringify(todo));
+    }, [todo]);
     const handleAddTodo = () => {
         if (text.trim()) {
             dispatch(addTodo(text)); 
